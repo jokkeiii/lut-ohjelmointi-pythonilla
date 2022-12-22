@@ -1,0 +1,5 @@
+nimi = input("Anna nimesi: ")
+kokonaisLuku = int(input("Anna kokonaisluku: "))
+liukuLuku = float(input("Anna desimaaliluku: "))
+print(nimi, "desimaaliluku", liukuLuku, "potenssiin", kokonaisLuku, "on", (liukuLuku ** kokonaisLuku))
+print("Kiitos ohjelman käytöstä.")
