@@ -1,3 +1,4 @@
+print("Tämä ohjelma laskee antamiesi 3 luvun keskiarvon.")
 ekaLuku = int(input("Anna luku 0 ja 10 väliltä: "))
 tokaLuku = int(input("Anna toinen luku 0 ja 10 väliltä: "))
 kolmasLuku = int(input("Anna kolmas luku 0 ja 10 väliltä: "))
