@@ -6,13 +6,13 @@ def main():
     tiedostoNimi = input("Anna luettavan tiedoston nimi: ")
 
     # lisataan tiedostonimeen polku
-    #tiedostoNimi = "./L06-tehtavat/files/" + tiedostoNimi
+    tiedostoNimi = "./L06-tehtavat/files/" + tiedostoNimi
 
     # kutsutaan funktiota laskemaan rivien maara
-    riviMaara = laskeRivit(tiedostoNimi)
+    riviMaara = LaskeRivit(tiedostoNimi)
     
     # kutsutaan funktiota laskemaan merkkien maara
-    merkkiMaara = laskeMerkit(tiedostoNimi)
+    merkkiMaara = LaskeMerkit(tiedostoNimi)
 
     print("Tiedostossa oli", riviMaara, "nimeä ja", merkkiMaara, "merkkiä.")
 
@@ -23,7 +23,7 @@ def main():
     return None
 
 
-def laskeRivit(tiedostoNimi):
+def LaskeRivit(tiedostoNimi):
 
     # asetetaan avattu tiedosto muuttujaan
     tiedosto = open(tiedostoNimi, 'r', encoding="utf-8")
@@ -51,7 +51,7 @@ def laskeRivit(tiedostoNimi):
     return riviMaara
 
 
-def laskeMerkit(tiedostoNimi):
+def LaskeMerkit(tiedostoNimi):
 
     # asetetaan avattu tiedosto muuttujaan
     tiedosto = open(tiedostoNimi, 'r', encoding="utf-8")
