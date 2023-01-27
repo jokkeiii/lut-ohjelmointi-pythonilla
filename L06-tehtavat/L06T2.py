@@ -2,10 +2,11 @@
 import math
 
 def main():
+    
     tiedostoNimi = input("Anna luettavan tiedoston nimi: ")
 
     # lisataan tiedostonimeen polku
-    tiedostoNimi = "./L06-tehtavat/files/" + tiedostoNimi
+    #tiedostoNimi = "./L06-tehtavat/files/" + tiedostoNimi
 
     # kutsutaan funktiota laskemaan rivien maara
     riviMaara = laskeRivit(tiedostoNimi)
@@ -16,7 +17,7 @@ def main():
     print("Tiedostossa oli", riviMaara, "nimeä ja", merkkiMaara, "merkkiä.")
 
     # lasketaan nimista pituuskeskiarvo ja pyoristetaan kokonaisluvuksi
-    nimiKeskiarvo = math.floor(merkkiMaara / riviMaara)
+    nimiKeskiarvo = round((merkkiMaara - riviMaara) / riviMaara)
 
     print("Keskimääräinen nimen pituus oli", nimiKeskiarvo, "merkkiä.")
     return None
@@ -56,6 +57,7 @@ def laskeMerkit(tiedostoNimi):
     tiedosto = open(tiedostoNimi, 'r', encoding="utf-8")
 
     merkkiMaara = 0
+
     # silmukka lukee tiedostoa kunnes tulee tyhja rivi vastaan
     while (True):
 
@@ -67,8 +69,9 @@ def laskeMerkit(tiedostoNimi):
             # poistutaan silmukasta
             break
         else:
+
             # rivinvaihtomerkki pois
-            # rivi = rivi[:-1]
+            #rivi = rivi[:-1]
             # lisataan merkkien maara muuttujaan
             merkkiMaara += len(rivi)
 
