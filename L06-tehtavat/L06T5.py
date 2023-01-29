@@ -2,6 +2,18 @@
 
 def main():
 
+    # kysytaan syotteena luettavan tiedoston nimi
+    luettavaTiedostoNimi = input("Anna tiedot sisältävän tiedoston nimi: ")
+
+    # lisataan tiedoston eteen sen polku
+    luettavaTiedostoNimi = "./L06-tehtavat/files/" + luettavaTiedostoNimi
+
+    # maaritetaan kirjoitettavan tiedoston nimi
+    kirjoitettavaTiedostoNimi = "L06T5T1.txt"
+
+    # lisataan tiedoston eteen sen polku
+    kirjoitettavaTiedostoNimi = "./L06-tehtavat/files/" + kirjoitettavaTiedostoNimi
+
     # valikon muuttuja
     valinta = 1
 
@@ -14,30 +26,41 @@ def main():
         # jos valinta on 1
         if (valinta == 1):
 
-            # kysytaan kayttajalta luvut
-            sanoma = "Anna ensimmäinen luku: "
-            ekaLuku = AnnaLuku(sanoma)
-            sanoma = "Anna toinen luku: "
-            tokaLuku = AnnaLuku(sanoma)
+            print(luettavaTiedostoNimi + "\n")
+
+            count = 0
+            # luetaan luvut
+            ekaLuku = LueLuku(luettavaTiedostoNimi, count)
+            print("Välissä\n")
+            tokaLuku = LueLuku(luettavaTiedostoNimi, count)
 
             # tulostetaan annetut luvut
-            print("Annoit luvut", ekaLuku, "ja", tokaLuku)
+            print("Luettiin luvut", ekaLuku, "ja", tokaLuku)
 
         # jos valinta on 2
         elif (valinta == 2):
 
             # kutsutaan summa aliohjelmaa ja asetetaan palautus muuttujaan
-            summaLause = Summa(ekaLuku, tokaLuku)
-            # tulostetaan aliohjelman palautus
-            print(summaLause)
+            kirjoitettavaTeksti = Summa(ekaLuku, tokaLuku)
+
+            # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
+            KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti)
+
+            # tulostetaan viesti
+            print("Tulos tallennettu tiedostoon.")
 
         # jos valinta on 3
         elif (valinta == 3):
 
             # kutsutaan osamaara aliohjelmaa ja asetetaan palautus muuttujaan
-            osamaaraLause = Osamaara(ekaLuku, tokaLuku)
-            # tulostetaan aliohjelman palautus
-            print(osamaaraLause)
+            kirjoitettavaTeksti = Osamaara(ekaLuku, tokaLuku)
+            
+            # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
+            KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti)
+
+            # tulostetaan viesti
+            print("Tulos tallennettu tiedostoon.")
+
         # jos valinta on 0
         elif (valinta == 0):
             # tulostetaan lopetusviesti
@@ -57,33 +80,88 @@ def Valikko():
     return valikko
 
 
-def AnnaLuku(sanoma):
+def LueLuku(luettavaTiedostoNimi):
 
-    # palautetaan kayttajalta kysytty syote,
-    # sanoma tulostus argumenttina
-    return int(input(sanoma))
+    print("Sisällä\n")
+    # avataan luettava tiedosto muuttujaan
+    luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
+
+    # luettavaa lukua varten muuttuja
+    luettavaLuku = 0
+
+    # silmukka kunnes tiedosto loppuu
+    while (True):
+
+        # luetaan rivi tiedostosta ja asetetaan muuttujaan
+        rivi = luettavaTiedosto.readline()
+
+        print(rivi, "\tyksi\n")
+
+        # poista rivin lopusta rivinvaihto
+        rivi = rivi[:-1]
+
+        print(rivi, "\tkaksi\n")
+
+        # jos rivilla ei ole merkkeja
+        if (not(rivi.isdigit())):
+            
+            # asetetaan luku nollaksi
+            luettavaLuku = 0
+            # tulostetaan virheviesti
+            print("Luvut loppuivat, lopeta ohjelma.")
+            # poistutaan silmukasta
+            break
+        # jos jatkuu
+        else:
+            
+            # asetetaan luku muuttujaan
+            luettavaLuku = int(rivi)
+            break 
+    
+    if (count >= 1):
+        # suljetaan luettava tiedosto
+        luettavaTiedosto.close()
+
+    # palautetaan luettava luku
+    return luettavaLuku
 
 
 def Summa(ekaLuku, tokaLuku):
 
     # lasketaan lukujen summa ja muotoillaan palautettava lause
-    summaLause = f"Summa {ekaLuku} + {tokaLuku} = {ekaLuku + tokaLuku}"
-    # palautetaan summalause
-    return summaLause
+    SummaLause = f"Summa {ekaLuku} + {tokaLuku} = {ekaLuku + tokaLuku}"
+    # palautetaan SummaLause
+    return SummaLause
+
 
 def Osamaara(ekaLuku, tokaLuku):
 
     # jos jakaja ei ole nolla
     if (tokaLuku != 0):
         # lasketaan lukujen osamaara ja muotoillaan palautettava lause
-        osamaaraLause = f"Osamäärä {ekaLuku} / {tokaLuku} = {round((ekaLuku / tokaLuku), 2)}"
+        OsamaaraLause = f"Osamäärä {ekaLuku} / {tokaLuku} = {round((ekaLuku / tokaLuku), 2)}"
     # jos jakaja on nolla
     else:
         # asetetaan virhesanoma lauseeksi
-        osamaaraLause = "Nollalla ei voi jakaa."
+        OsamaaraLause = "Nollalla ei voi jakaa."
     
-    # palautetaan osamaaralause
-    return osamaaraLause
+    # palautetaan OsamaaraLause
+    return OsamaaraLause
+
+
+def KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti):
+    
+    # avataan kirjoitettava tiedosto muuttujaan
+    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+    
+    # kirjoitetaan tiedot tiedostoon
+    kirjoitettavaTiedosto.write(kirjoitettavaTeksti)
+
+    # suljetaan tiedosto
+    kirjoitettavaTiedosto.close()
+
+    # poistutaan ohjelmasta
+    return None
 
 
 # kutsutaan paaohjelmaa
