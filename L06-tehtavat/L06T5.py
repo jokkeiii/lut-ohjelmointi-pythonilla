@@ -3,7 +3,7 @@
 def main():
 
     # kysytaan syotteena luettavan tiedoston nimi
-    luettavaTiedostoNimi = input("Anna tiedot sisältävän tiedoston nimi: ")
+    luettavaTiedostoNimi = input("Anna luettavan tiedoston nimi: ")
 
     # lisataan tiedoston eteen sen polku
     luettavaTiedostoNimi = "./L06-tehtavat/files/" + luettavaTiedostoNimi
@@ -17,6 +17,12 @@ def main():
     # valikon muuttuja
     valinta = 1
 
+    # avataan kirjoitettava tiedosto muuttujaan
+    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+
+    # avataan luettava tiedosto muuttujaan
+    luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
+
     # valikko silmukka
     while (valinta != 0):
 
@@ -26,13 +32,9 @@ def main():
         # jos valinta on 1
         if (valinta == 1):
 
-            print(luettavaTiedostoNimi + "\n")
-
-            count = 0
             # luetaan luvut
-            ekaLuku = LueLuku(luettavaTiedostoNimi, count)
-            print("Välissä\n")
-            tokaLuku = LueLuku(luettavaTiedostoNimi, count)
+            ekaLuku = LueLuku(luettavaTiedostoNimi, luettavaTiedosto)
+            tokaLuku = LueLuku(luettavaTiedostoNimi, luettavaTiedosto)
 
             # tulostetaan annetut luvut
             print("Luettiin luvut", ekaLuku, "ja", tokaLuku)
@@ -44,7 +46,7 @@ def main():
             kirjoitettavaTeksti = Summa(ekaLuku, tokaLuku)
 
             # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
-            KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti)
+            KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti)
 
             # tulostetaan viesti
             print("Tulos tallennettu tiedostoon.")
@@ -56,7 +58,7 @@ def main():
             kirjoitettavaTeksti = Osamaara(ekaLuku, tokaLuku)
             
             # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
-            KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti)
+            KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti)
 
             # tulostetaan viesti
             print("Tulos tallennettu tiedostoon.")
@@ -69,6 +71,15 @@ def main():
         else:
             print("Tuntematon valinta, yritä uudestaan.")
 
+    # palautetaan luettava luku
+    luettavaTiedosto.close()
+
+    # suljetaan kirjoitettava tiedosto
+    kirjoitettavaTiedosto.close()
+
+    # palautetaan None
+    return None
+
 
 def Valikko():
 
@@ -80,56 +91,44 @@ def Valikko():
     return valikko
 
 
-def LueLuku(luettavaTiedostoNimi):
-
-    print("Sisällä\n")
-    # avataan luettava tiedosto muuttujaan
-    luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
+def LueLuku(luettavaTiedostoNimi, luettavaTiedosto):
 
     # luettavaa lukua varten muuttuja
     luettavaLuku = 0
 
-    # silmukka kunnes tiedosto loppuu
-    while (True):
+    # luetaan rivi tiedostosta ja asetetaan muuttujaan
+    rivi = luettavaTiedosto.readline()
 
-        # luetaan rivi tiedostosta ja asetetaan muuttujaan
-        rivi = luettavaTiedosto.readline()
+    # poista rivin lopusta rivinvaihto
+    rivi = rivi[:-1]
 
-        print(rivi, "\tyksi\n")
+    # jos rivilla ei ole merkkeja
+    if (not(rivi.isdigit())):
+        
+        # asetetaan luku nollaksi
+        luettavaLuku = 0
+        # tulostetaan virheviesti
+        print("Luvut loppuivat, lopeta ohjelma.")
+        
+        # palautetaan luettava luku
+        return luettavaLuku
+        
+    # jos jatkuu
+    else:
+        
+        # asetetaan luku muuttujaan
+        luettavaLuku = int(rivi)
+        # palautetaan luettava luku
+        return luettavaLuku 
 
-        # poista rivin lopusta rivinvaihto
-        rivi = rivi[:-1]
-
-        print(rivi, "\tkaksi\n")
-
-        # jos rivilla ei ole merkkeja
-        if (not(rivi.isdigit())):
-            
-            # asetetaan luku nollaksi
-            luettavaLuku = 0
-            # tulostetaan virheviesti
-            print("Luvut loppuivat, lopeta ohjelma.")
-            # poistutaan silmukasta
-            break
-        # jos jatkuu
-        else:
-            
-            # asetetaan luku muuttujaan
-            luettavaLuku = int(rivi)
-            break 
+    # palautetaan None
+    return None    
     
-    if (count >= 1):
-        # suljetaan luettava tiedosto
-        luettavaTiedosto.close()
-
-    # palautetaan luettava luku
-    return luettavaLuku
-
-
+    
 def Summa(ekaLuku, tokaLuku):
 
     # lasketaan lukujen summa ja muotoillaan palautettava lause
-    SummaLause = f"Summa {ekaLuku} + {tokaLuku} = {ekaLuku + tokaLuku}"
+    SummaLause = f"Summa {ekaLuku} + {tokaLuku} = {ekaLuku + tokaLuku}\n"
     # palautetaan SummaLause
     return SummaLause
 
@@ -137,28 +136,24 @@ def Summa(ekaLuku, tokaLuku):
 def Osamaara(ekaLuku, tokaLuku):
 
     # jos jakaja ei ole nolla
-    if (tokaLuku != 0):
-        # lasketaan lukujen osamaara ja muotoillaan palautettava lause
-        OsamaaraLause = f"Osamäärä {ekaLuku} / {tokaLuku} = {round((ekaLuku / tokaLuku), 2)}"
+    #if (tokaLuku != 0):
+    
+    # lasketaan lukujen osamaara ja muotoillaan palautettava lause
+    OsamaaraLause = f"Osamäärä {ekaLuku} / {tokaLuku} = {round((ekaLuku / tokaLuku), 2)}\n"
+    
     # jos jakaja on nolla
-    else:
-        # asetetaan virhesanoma lauseeksi
-        OsamaaraLause = "Nollalla ei voi jakaa."
+    #else:
+    #    # asetetaan virhesanoma lauseeksi
+    #    OsamaaraLause = "Nollalla ei voi jakaa."
     
     # palautetaan OsamaaraLause
     return OsamaaraLause
 
 
-def KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, kirjoitettavaTeksti):
-    
-    # avataan kirjoitettava tiedosto muuttujaan
-    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+def KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti):
     
     # kirjoitetaan tiedot tiedostoon
     kirjoitettavaTiedosto.write(kirjoitettavaTeksti)
-
-    # suljetaan tiedosto
-    kirjoitettavaTiedosto.close()
 
     # poistutaan ohjelmasta
     return None
