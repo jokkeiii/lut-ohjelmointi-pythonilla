@@ -11,11 +11,12 @@
 # vaikuttaneet siihen yllä mainituilla tavoilla.
 ######################################################################
 
-# otetaan math-kirjasto kayttoon
+# otetaan math- ja random-kirjastot kayttoon
 import math
-
+import random
 
 def main():
+    print("Tämä ohjelma käyttää kirjastoja tehtävien ratkaisemiseen.")
     # valikko silmukka
     while(True):
         # tulostetaan valikon vaihtoehdot
@@ -37,7 +38,6 @@ def main():
         # jos valinta ei ole mikaan em.
         else: 
             print("Tuntematon valinta, yritä uudestaan.")
-
     # poistutaan paaohjelmasta
     return None
     
@@ -49,32 +49,42 @@ def YmpyranPintaAla():
     # lasketaan pinta-ala
     pintaAla = math.pi * math.pow(sade, 2)
     # tulostetaan sade ja laskettu pinta-ala
-    print("Säteellä", sade, "ympyrän pinta-ala on", round(pintaAla, 2), "\n")
+    print("Säteellä ", sade, " ympyrän pinta-ala on ", round(pintaAla, 2), ".\n", sep="")
     # poistutaan aliohjelmasta
     return None
 
 
+# aliohjelma arpoo luvun ja kysyy kayttajalta arvausta
 def ArpaLuku():
     # asetetaan satunnaisfunktiolle siemenluku
     random.seed(1)
     # arvotaan luku
-    arvottuLuku = random()
+    arvottuLuku = random.randint(0, 1000)
     # kysytaan arvaus kayttajalta
     print("Arvaa ohjelman arpoma kokonaisluku.")
     arvaus = int(input("Anna kokonaisluku välillä 0-1000: "))
-    # laskuri silmukkaa varten
+    # laskuri silmukan kierroslukua varten
     laskuri = 0
     # silmukka lukujen testausta varten
     while(True):
+        # lisataan laskuriin yksi per kierros
+        laskuri += 1
         # jos arvaus on suurempi kuin arvottu luku
         if (arvaus > arvottuLuku):
             print("Haettu luku on pienempi.")
+        # jos arvaus on pienempi kuin arvottu luku
         elif (arvaus < arvottuLuku):
             print("Haettu luku on suurempi.")
-        elif ():
-            print()
-
-
+        # jos arvaus on oikein
+        elif (arvaus == arvottuLuku):
+            print("Oikein! Käytit arvaamiseen", laskuri, "kierrosta.\n")
+            # poistutaan silmukasta
+            break
+        # kysytaan arvaus kayttajalta
+        arvaus = int(input("Anna kokonaisluku välillä 0-1000: "))
+    # poistutaan aliohjelmasta
+    return None
+    
 # kutsutaan paaohjelmaa
 main()
 
