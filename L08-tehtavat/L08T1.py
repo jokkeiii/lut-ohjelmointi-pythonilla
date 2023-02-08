@@ -2,7 +2,7 @@
 # CT60A0203 Ohjelmoinnin perusteet
 # Tekijä: Joakim Ijäs
 # Opiskelijanumero: 001063376
-# Päivämäärä: 06/02/2023
+# Päivämäärä: 08/02/2023
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat 
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
 # 
@@ -49,7 +49,7 @@ def YmpyranPintaAla():
     # lasketaan pinta-ala
     pintaAla = math.pi * math.pow(sade, 2)
     # tulostetaan sade ja laskettu pinta-ala
-    print("Säteellä ", sade, " ympyrän pinta-ala on ", round(pintaAla, 2), ".\n", sep="")
+    print("Säteellä ", sade, " ympyrän pinta-ala on ", format(pintaAla, '.2f'), ".\n", sep="")
     # poistutaan aliohjelmasta
     return None
 
