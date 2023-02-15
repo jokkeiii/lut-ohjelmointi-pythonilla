@@ -1,0 +1,6 @@
+Summa 2 + 8 = 10
+Osamäärä 2 / 8 = 0.25
+Summa 1 + 3 = 4
+Osamäärä 1 / 3 = 0.33
+Summa 2 + 2 = 4
+Osamäärä 2 / 2 = 1.0
