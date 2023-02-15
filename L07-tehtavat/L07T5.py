@@ -17,21 +17,20 @@ def main():
     # kysytaan syotteena luettavan tiedoston nimi
     luettavaTiedostoNimi = input("Anna luettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
-    luettavaTiedostoNimi = "./L07-tehtavat/files/" + luettavaTiedostoNimi
+    # luettavaTiedostoNimi = "./L07-tehtavat/files/" + luettavaTiedostoNimi
     # maaritetaan kirjoitettavan tiedoston nimi
-    kirjoitettavaTiedostoNimi = "L06T5T1.txt"
+    kirjoitettavaTiedostoNimi = input("Anna kirjoitettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
-    kirjoitettavaTiedostoNimi = "./L07-tehtavat/files/" + kirjoitettavaTiedostoNimi
+    # kirjoitettavaTiedostoNimi = "./L07-tehtavat/files/" + kirjoitettavaTiedostoNimi
 
     # luettavien lista
     lukuLista = []
     # kirjoitettavien lista
     tulosLista = []
-    # valikon muuttuja ja laskuri lukulistassa etenemistä varten
-    valinta = 1; lukuLaskuri = 0
-
-    # avataan kirjoitettava tiedosto muuttujaan
-    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+    # valikon muuttuja
+    valinta = 1
+    # laskuri lukulistassa etenemistä varten
+    lukuLaskuri = 0
 
     # valikko silmukka
     while (valinta != 0):
@@ -41,46 +40,61 @@ def main():
 
         # jos valinta on 1
         if (valinta == 1):
+            # jos lukuja ei ole viela luettu tiedostosta
             if (lukuLaskuri == 0):
                 # luetaan luvut
                 lukuLista = LueLuku(luettavaTiedostoNimi)
-                # tulostetaan annetut luvut
-                print("Luettiin luvut", lukuLista)
+                # tulostetaan lukuviesti
+                # print("Luettu tiedosto '" + luettavaTiedostoNimi[:-11] + "'.")
+                # codegrade versio
+                print("Luettu tiedosto '" + luettavaTiedostoNimi + "'.")
+                # asetetaan luvut laskettaviksi muuttujiin
+                ekaLuku = lukuLista[lukuLaskuri]
+                tokaLuku = lukuLista[lukuLaskuri + 1]
+                # tulostetaan luvut
+                print("Luettiin luvut", ekaLuku, "ja", tokaLuku)
+                # lisataan laskuriin seuraavia lukuja varten
+                lukuLaskuri += 2
+            # jos kaikki listan luvut on jo luettu
+            elif (lukuLaskuri + 1 > len(lukuLista)):
+                print("Luvut loppuivat, lopeta ohjelma.")
+            # kun luvut ovat listassa
             else:
-                # luetaan luvut listasta
-                print(tulosLista[0], tulosLista[1])
+                # asetetaan luvut laskettaviksi muuttujiin
+                ekaLuku = lukuLista[lukuLaskuri]
+                tokaLuku = lukuLista[lukuLaskuri + 1]
+                # tulostetaan luvut
+                print("Luettiin luvut", ekaLuku, "ja", tokaLuku)
+                # lisataan laskuriin seuraavia lukuja varten
+                lukuLaskuri += 2
         # jos valinta on 2
         elif (valinta == 2):
-
             # kutsutaan summa aliohjelmaa ja asetetaan palautus muuttujaan
-            kirjoitettavaTeksti = Summa(a, b)
-            # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
-            KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti)
+            kirjoitettavaTeksti = Summa(ekaLuku, tokaLuku)
+            # lisataan kirjoitettavaTeksti listaan
+            tulosLista.append(kirjoitettavaTeksti)
             # tulostetaan viesti
-            print("Tulos tallennettu tiedostoon.")
-
+            print("Tulos lisätty listaan.")
         # jos valinta on 3
         elif (valinta == 3):
-
             # kutsutaan osamaara aliohjelmaa ja asetetaan palautus muuttujaan
-            kirjoitettavaTeksti = Osamaara(a, b)
-            # kutsutaan aliohjelmaa kirjoittamaan tiedostoon
-            KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti)
+            kirjoitettavaTeksti = Osamaara(ekaLuku, tokaLuku)
+            # lisataan kirjoitettavaTeksti listaan
+            tulosLista.append(kirjoitettavaTeksti)
             # tulostetaan viesti
-            print("Tulos tallennettu tiedostoon.")
+            print("Tulos lisätty listaan.")
 
         # jos valinta on 0
         elif (valinta == 0):
+            # kutsutaan aliohjelmaa kirjoittamaan listan sisalto tiedostoon
+            KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, tulosLista)
             # tulostetaan lopetusviesti
-            print("Lopetetaan")
+            # print("Tallennettu tiedosto '" + kirjoitettavaTiedostoNimi[:-11] + "'.")
+            # codegrade versio
+            print("Tallennettu tiedosto '" + kirjoitettavaTiedostoNimi + "'.")
         # jos valinta ei ole 1, 2, 3 tai 0
         else:
             print("Tuntematon valinta, yritä uudestaan.")
-
-    # palautetaan luettava luku
-    luettavaTiedosto.close()
-    # suljetaan kirjoitettava tiedosto
-    kirjoitettavaTiedosto.close()
 
     # palautetaan None
     return None
@@ -100,58 +114,64 @@ def LueLuku(luettavaTiedostoNimi):
     
     # avataan luettava tiedosto muuttujaan
     luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
-    # luettavaa lukua varten muuttuja
+    # luettavaa lukua varten lista
     luettavatLuvut = []
-    # luetaan rivi tiedostosta ja asetetaan muuttujaan
-    rivi = luettavaTiedosto.readline()
-    # poista rivin lopusta rivinvaihto
-    rivi = rivi[:-1]
-
-    # jos rivilla ei ole merkkeja
-    if (not(rivi.isdigit())):
-        
-        # palautetaan luetut luvut
-        return luettavatLuvut
-        
-    # jos jatkuu
-    else:
-        
-        # asetetaan luku listaan
-        luettavatLuvut.append(int(rivi))
+    
+    # silmukka tiedoston lapi kaymiseen
+    while (True):
+        # luetaan rivi tiedostosta ja asetetaan muuttujaan
+        rivi = luettavaTiedosto.readline()
+        # poista rivin lopusta rivinvaihto
+        rivi = rivi[:-1]
+        # jos rivilla ei ole merkkeja
+        if (not(rivi.isdigit())):
+            # suljetaan tiedosto
+            luettavaTiedosto.close()
+            # palautetaan luetut luvut
+            return luettavatLuvut    
+        # jos jatkuu
+        else:
+            # asetetaan luku listaan
+            luettavatLuvut.append(int(rivi))
 
     # palautetaan None
     return None    
     
     
-def Summa(a, b):
+def Summa(ekaLuku, tokaLuku):
 
     # lasketaan lukujen summa ja muotoillaan palautettava lause
-    SummaLause = f"Summa {a} + {b} = {a + b}\n"
+    SummaLause = f"Summa {ekaLuku} + {tokaLuku} = {ekaLuku + tokaLuku}\n"
     # palautetaan SummaLause
     return SummaLause
 
 
-def Osamaara(a, b):
-
+def Osamaara(ekaLuku, tokaLuku):
     # jos jakaja ei ole nolla
-    #if (b != 0):
+    #if (tokaLuku != 0):
     
     # lasketaan lukujen osamaara ja muotoillaan palautettava lause
-    OsamaaraLause = f"Osamäärä {a} / {b} = {round((a / b), 2)}\n"
+    OsamaaraLause = f"Osamäärä {ekaLuku} / {tokaLuku} = {round((ekaLuku / tokaLuku), 2)}\n"
     
     # jos jakaja on nolla
     #else:
     #    # asetetaan virhesanoma lauseeksi
     #    OsamaaraLause = "Nollalla ei voi jakaa."
-    
+
     # palautetaan OsamaaraLause
     return OsamaaraLause
 
 
-def KirjoitaTiedostoon(kirjoitettavaTiedosto, kirjoitettavaTeksti):
+def KirjoitaTiedostoon(kirjoitettavaTiedostoNimi, tulosLista):
+    # avataan kirjoitettava tiedosto muuttujaan
+    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+    # kirjoitetaan jokainen alkio listasta
+    for element in tulosLista:
+        # kirjoitetaan tiedot tiedostoon
+        kirjoitettavaTiedosto.write(element)
     
-    # kirjoitetaan tiedot tiedostoon
-    kirjoitettavaTiedosto.write(kirjoitettavaTeksti)
+    # suljetaan kirjoitettava tiedosto
+    kirjoitettavaTiedosto.close()
     # poistutaan ohjelmasta
     return None
 
