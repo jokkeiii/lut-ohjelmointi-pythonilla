@@ -22,36 +22,37 @@ def main():
     kirjoitettavaTiedostoNimi = input("Anna kirjoitettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
     kirjoitettavaTiedostoNimi = "./L08-tehtavat/files/" + kirjoitettavaTiedostoNimi
-    # avataan tiedosto luettavaksi
-    luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
-    # avataan tiedosto kirjoitettavaksi
-    kirjoitettavaTiedosto = open(kirjoitettavaTiedostoNimi, 'w', encoding="utf-8")
+    
+    laskuri = 1
 
-    # silmukka tiedoston lukua varten
-    while(True):
-        # luetaan rivi
-        rivi = luettavaTiedosto.readline()
+    tuoteLista = []
+    valmisLista = []
 
-        # jos rivi on tyhja
-        if (len(rivi) == 0):
-            # poistutaan silmukasta
+    while (True):
+        valinta = Valikko()
+
+        # jos valinta on 1
+        if (valinta == 1):
+            tuoteLista = L08T5Kirjasto.LueTiedosto(luettavaTiedostoNimi)
+            print("Tiedosto '", luettavaTiedostoNimi, "' luettu, ", len(tuoteLista), " riviä.", sep="")
+        # jos valinta on 2
+        elif (valinta == 2):
+            varastonArvo = L08T5Kirjasto.AnalysoiTiedot()
+            # tulostetaan viesti
+            print("Tiedot analysoitu, varaston arvo on ", varastonArvo, " EUR.")
+        # jos valinta on 3
+        elif (valinta == 3):
+            # kutsutaan aliohjelmaa
+            L08T5Kirjasto.TallennaTiedot(kirjoitettavaTiedostoNimi)
+            # tulostetaan viesti
+            print("Tulokset tallennettu tiedostoon '" + kirjoitettavaTiedostoNimi + "'.")
+        # jos valinta on 0
+        elif (valinta == 0):
+            # tulostetaan lopetusviesti
             break
-        # poistetaan rivinvaihto
-        rivi = rivi[:-1]
-        # kaytetaan split funktiota hyodyksi joka tekee
-        # luetusta rivista listan
-        rivi = rivi.split(';')
-        tulos = '{:.2f}'.format(int(rivi[1]) * float(rivi[2]),2)
-        tulos = str(tulos) + "\n"
-        # tulostetaan tiedot listasta
-        print(tulos, end="")
-        kirjoitettavaTiedosto.write(tulos)
-
-
-    # suljetaan tiedostot
-    luettavaTiedosto.close()
-    kirjoitettavaTiedosto.close()
-
+        # jos valinta ei ole 1, 2, 3 tai 0
+        else:
+            print("Tuntematon valinta, yritä uudestaan.")
     # poistutaan paaohjelmasta
     return None
 
