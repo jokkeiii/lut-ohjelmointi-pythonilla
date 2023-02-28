@@ -22,11 +22,9 @@ def main():
     kirjoitettavaTiedostoNimi = input("Anna kirjoitettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
     kirjoitettavaTiedostoNimi = "./L08-tehtavat/files/" + kirjoitettavaTiedostoNimi
-    
-    laskuri = 1
-
+    # listat lukemista ja tallenntamista varten
     tuoteLista = []
-    valmisLista = []
+    tulosLista = []
 
     while (True):
         valinta = Valikko()
@@ -34,16 +32,13 @@ def main():
         # jos valinta on 1
         if (valinta == 1):
             tuoteLista = L08T5Kirjasto.LueTiedosto(luettavaTiedostoNimi)
-            print("Tiedosto '", luettavaTiedostoNimi, "' luettu, ", len(tuoteLista), " riviä.", sep="")
         # jos valinta on 2
         elif (valinta == 2):
-            varastonArvo = L08T5Kirjasto.AnalysoiTiedot()
-            # tulostetaan viesti
-            print("Tiedot analysoitu, varaston arvo on ", varastonArvo, " EUR.")
+            tulosLista = L08T5Kirjasto.AnalysoiTiedot(tuoteLista)
         # jos valinta on 3
         elif (valinta == 3):
             # kutsutaan aliohjelmaa
-            L08T5Kirjasto.TallennaTiedot(kirjoitettavaTiedostoNimi)
+            L08T5Kirjasto.TallennaTiedot(kirjoitettavaTiedostoNimi, tulosLista)
             # tulostetaan viesti
             print("Tulokset tallennettu tiedostoon '" + kirjoitettavaTiedostoNimi + "'.")
         # jos valinta on 0
