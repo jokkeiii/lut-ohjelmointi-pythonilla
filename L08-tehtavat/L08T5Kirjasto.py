@@ -9,10 +9,10 @@ def LueTiedosto(luettavaTiedostoNimi):
     luettavaTiedosto = open(luettavaTiedostoNimi, 'r', encoding="utf-8")
     # tuotelista
     tuoteLista = []
-    # objekti
-    tuoteRivi = TietoLuokka()
     # silmukka tiedoston lukua varten
     while(True):
+        # objekti
+        tuoteRivi = TietoLuokka()
         # luetaan rivi
         rivi = luettavaTiedosto.readline()
         
@@ -31,16 +31,13 @@ def LueTiedosto(luettavaTiedostoNimi):
         tuoteRivi.tuotekoodi = rivi[0]
         tuoteRivi.tuoteLkm = int(rivi[1])
         tuoteRivi.tuoteHinta = float(rivi[2])
-        print(tuoteRivi.tuotekoodi, tuoteRivi.tuoteLkm, tuoteRivi.tuoteHinta)
         # lisataan objekti listaan
         tuoteLista.append(tuoteRivi)
-    # for element in tuoteLista:
-    #     print(element.tuotekoodi, element.tuoteLkm, element.tuoteHinta)
-        
     # suljetaan tiedosto
     luettavaTiedosto.close()
     # aliohjelman lopetusviesti
     print("Tiedosto '", luettavaTiedostoNimi, "' luettu, ", len(tuoteLista), " riviä.", sep="")
+    print()
     # palautetaan lista
     return tuoteLista
 
@@ -48,14 +45,14 @@ def LueTiedosto(luettavaTiedostoNimi):
 def AnalysoiTiedot(tuoteLista):
     tulosLista = []
     summa = 0
-    for element in len(tuoteLista):
+    for element in tuoteLista:
         tulos = round(element.tuoteLkm * element.tuoteHinta, 2)
-        print("\t",element.tuoteLkm, element.tuoteHinta)
         summa += tulos
         tulos = '{:.2f}'.format(tulos) + "\n"
         tulosLista.append(tulos)
     # aliohjelman lopetusviesti
-    print("Tiedot analysoitu, varaston arvo on", summa, "EUR.")
+    print("Tiedot analysoitu, varaston arvo on", '{:.2f}'.format(summa), "EUR.")
+    print()
     # palautetaan lista
     return tulosLista
 
@@ -70,4 +67,5 @@ def TallennaTiedot(kirjoitettavaTiedostoNimi, tulosLista):
     kirjoitettavaTiedosto.close()
     # tulostetaan aliohjelman lopetusviesti
     print("Tulokset tallennettu tiedostoon '" + kirjoitettavaTiedostoNimi + "'.")
+    print()
     return None

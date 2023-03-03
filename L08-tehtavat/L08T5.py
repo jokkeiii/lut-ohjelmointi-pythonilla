@@ -2,7 +2,7 @@
 # CT60A0203 Ohjelmoinnin perusteet
 # Tekijä: Joakim Ijäs
 # Opiskelijanumero: 001063376
-# Päivämäärä: 28/02/2023
+# Päivämäärä: 03/03/2023
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat 
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
 # 
@@ -17,11 +17,11 @@ def main():
     # kysytaan syotteena luettavan tiedoston nimi
     luettavaTiedostoNimi = input("Anna luettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
-    luettavaTiedostoNimi = "./L08-tehtavat/files/" + luettavaTiedostoNimi
+    # luettavaTiedostoNimi = "./L08-tehtavat/files/" + luettavaTiedostoNimi
     # maaritetaan kirjoitettavan tiedoston nimi
     kirjoitettavaTiedostoNimi = input("Anna kirjoitettavan tiedoston nimi: ")
     # lisataan tiedoston eteen sen polku
-    kirjoitettavaTiedostoNimi = "./L08-tehtavat/files/" + kirjoitettavaTiedostoNimi
+    # kirjoitettavaTiedostoNimi = "./L08-tehtavat/files/" + kirjoitettavaTiedostoNimi
     # listat lukemista ja tallenntamista varten
     tuoteLista = []
     tulosLista = []
@@ -31,16 +31,16 @@ def main():
 
         # jos valinta on 1
         if (valinta == 1):
+            # kutsutaan aliohjelmaa
             tuoteLista = L08T5Kirjasto.LueTiedosto(luettavaTiedostoNimi)
         # jos valinta on 2
         elif (valinta == 2):
+            # kutsutaan aliohjelmaa
             tulosLista = L08T5Kirjasto.AnalysoiTiedot(tuoteLista)
         # jos valinta on 3
         elif (valinta == 3):
             # kutsutaan aliohjelmaa
             L08T5Kirjasto.TallennaTiedot(kirjoitettavaTiedostoNimi, tulosLista)
-            # tulostetaan viesti
-            print("Tulokset tallennettu tiedostoon '" + kirjoitettavaTiedostoNimi + "'.")
         # jos valinta on 0
         elif (valinta == 0):
             # tulostetaan lopetusviesti
