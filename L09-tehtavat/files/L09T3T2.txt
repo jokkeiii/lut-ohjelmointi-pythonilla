@@ -1,0 +1,34 @@
+Alfa Romeo
+Audi
+BMW
+Chevrolet
+Chrysler
+Citroen
+Dacia
+Fiat
+Ford
+Honda
+Hyundai
+Jaguar
+Jeep
+Kia
+Land Rover
+Lexus
+Mazda
+Mercedes-Benz
+Mini
+Mitsubishi
+Nissan
+Opel
+Peugeot
+Porsche
+Renault
+Saab
+Seat
+Skoda
+Subaru
+Suzuki
+Toyota
+Volkswagen
+Volkswagen, VW
+Volvo
