@@ -2,7 +2,7 @@
 # CT60A0203 Ohjelmoinnin perusteet
 # Tekijä: Joakim Ijäs
 # Opiskelijanumero: 001063376
-# Päivämäärä: xx/01/2023
+# Päivämäärä: xx/03/2023
 # Kurssin oppimateriaalien lisäksi työhön ovat vaikuttaneet seuraavat 
 # lähteet ja henkilöt, ja se näkyy tehtävässä seuraavalla tavalla:
 # 
